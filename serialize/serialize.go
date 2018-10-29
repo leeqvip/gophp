@@ -29,7 +29,6 @@ func Marshal(value interface{}) ([]byte, error) {
 		return MarshalMap(value)
 	case reflect.Slice:
 		return MarshalSlice(value)
-	case reflect.Struct:
 	default:
 		return nil, fmt.Errorf("Marshal: Unknown type %T with value %#v", t, value)
 	}
@@ -80,8 +79,6 @@ func MarshalMap(value interface{}) ([]byte, error) {
 
 	s := reflect.ValueOf(value)
 
-	// Go randomises maps. To be able to test this we need to make sure the
-	// map keys always come out in the same order. So we sort them first.
 	mapKeys := s.MapKeys()
 	sort.Slice(mapKeys, func(i, j int) bool {
 		return gophp.LessValue(mapKeys[i], mapKeys[j])
@@ -128,44 +125,4 @@ func MarshalSlice(value interface{}) ([]byte, error) {
 	}
 
 	return []byte(fmt.Sprintf("a:%d:{%s}", s.Len(), buffer.String())), nil
-}
-
-func MarshalStruct(input interface{}) ([]byte, error) {
-	value := reflect.ValueOf(input)
-	typeOfValue := value.Type()
-
-	// Some of the fields in the struct may not be visible (unexported). We
-	// need to make sure we count all the visible ones for the final result.
-	visibleFieldCount := 0
-
-	var buffer bytes.Buffer
-	for i := 0; i < value.NumField(); i++ {
-		f := value.Field(i)
-
-		if !f.CanInterface() {
-			// This is an unexported field, we cannot read it.
-			continue
-		}
-
-		visibleFieldCount++
-
-		// Note: since we can only export fields that are public (start
-		// with an uppercase letter) we must change it to lower case. If
-		// you really do want it to be upper case you will have to wait
-		// for when tags are supported on individual fields.
-		fieldName := gophp.LowerCaseFirstLetter(typeOfValue.Field(i).Name)
-		buffer.Write(MarshalString(fieldName))
-
-		m, err := Marshal(f.Interface())
-		if err != nil {
-			return nil, err
-		}
-
-		buffer.Write(m)
-	}
-
-	className := reflect.ValueOf(input).Type().Name()
-
-	return []byte(fmt.Sprintf("O:%d:\"%s\":%d:{%s}", len(className),
-		className, visibleFieldCount, buffer.String())), nil
 }

@@ -1,4 +1,11 @@
-# Golang implementation for PHP's function serialize() and unserialize()
+go-serialize 
+====
+
+[![Build Status](https://travis-ci.com/techleeone/gophp.svg?branch=master)](https://travis-ci.com/techleeone/gophp)
+
+
+Golang implementation for PHP's function serialize() and unserialize()
+
 
 ## Install / Update
 

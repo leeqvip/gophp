@@ -1,5 +1,11 @@
-# gophp
+gophp
+====
+
+[![Build Status](https://travis-ci.com/techleeone/gophp.svg?branch=master)](https://travis-ci.com/techleeone/gophp)
+
+
 Golang implementation for PHP's functions
+
 
 ## Install / Update
 

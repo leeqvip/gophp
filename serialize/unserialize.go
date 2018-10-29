@@ -35,13 +35,13 @@ func unMarshalByReader(reader *bytes.Reader) (interface{}, error) {
 				return unMarshalString(reader, true)
 			case 'a':
 				return unMarshalArray(reader)
-			case 'O':
+				// case 'O':
 
-			case 'C':
+				// case 'C':
 
-			case 'R', 'r':
+				// case 'R', 'r':
 
-			case 'x':
+				// case 'x':
 
 			}
 		}
