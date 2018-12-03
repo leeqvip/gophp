@@ -1,7 +1,7 @@
 gophp
 ====
 
-[![Build Status](https://travis-ci.com/techleeone/gophp.svg?branch=master)](https://travis-ci.com/techleeone/gophp)
+[![Build Status](https://travis-ci.com/techoner/gophp.svg?branch=master)](https://travis-ci.com/techoner/gophp)
 
 
 Golang implementation for PHP's functions
