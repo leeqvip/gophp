@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"sort"
 
-	"github.com/techleeone/gophp"
+	"github.com/techoner/gophp/utils"
 )
 
 func Marshal(value interface{}) ([]byte, error) {
@@ -57,9 +57,9 @@ func MarshalNumber(value interface{}) []byte {
 	default:
 		val = "0"
 	case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64:
-		val, _ = gophp.NumericalToString(value)
+		val, _ = utils.NumericalToString(value)
 	case float32, float64:
-		val, _ = gophp.NumericalToString(value)
+		val, _ = utils.NumericalToString(value)
 		isFloat = true
 	}
 
@@ -81,7 +81,7 @@ func MarshalMap(value interface{}) ([]byte, error) {
 
 	mapKeys := s.MapKeys()
 	sort.Slice(mapKeys, func(i, j int) bool {
-		return gophp.LessValue(mapKeys[i], mapKeys[j])
+		return utils.LessValue(mapKeys[i], mapKeys[j])
 	})
 
 	var buffer bytes.Buffer

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/techleeone/gophp"
+	"github.com/techoner/gophp/utils"
 )
 
 const UNSERIALIZABLE_OBJECT_MAX_LEN = 10 * 1024 * 1024 * 1024
@@ -182,10 +182,10 @@ func unMarshalArray(reader *bytes.Reader) (interface{}, error) {
 		case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64:
 			// intKey, _ := k.(int)
 			// val[strconv.Itoa(intKey)] = v
-			stringKey, _ := gophp.NumericalToString(k)
+			stringKey, _ := utils.NumericalToString(k)
 			val[stringKey] = v
 
-			// stringI, _ := gophp.NumericalToString(i)
+			// stringI, _ := utils.NumericalToString(i)
 			if i == k {
 				indexLen++
 			}

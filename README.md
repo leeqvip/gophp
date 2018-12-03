@@ -10,7 +10,7 @@ Golang implementation for PHP's functions
 ## Install / Update
 
 ```
-go get -u github.com/techleeone/gophp
+go get -u github.com/techoner/gophp
 ```
 
 ## Example
@@ -21,7 +21,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/techleeone/gophp/serialize"
+	"github.com/techoner/gophp"
 )
 
 func main() {
@@ -29,14 +29,18 @@ func main() {
 	str := `a:1:{s:3:"php";s:24:"世界上最好的语言";}`
 
 	// unserialize() in php
-	out, _ := serialize.UnMarshal([]byte(str))
+	out, _ := gophp.Unserialize([]byte(str))
 
 	fmt.Println(out) //map[php:世界上最好的语言]
 
 	// serialize() in php
-	jsonbyte, _ := serialize.Marshal(out)
+	jsonbyte, _ := gophp.Serialize(out)
 
 	fmt.Println(string(jsonbyte)) // a:1:{s:3:"php";s:24:"世界上最好的语言";}
 
 }
 ```
+
+## License
+
+This project is licensed under the [MIT license](LICENSE).
