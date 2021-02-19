@@ -8,7 +8,7 @@ import (
 	"github.com/techoner/gophp/utils"
 )
 
-const UNSERIALIZABLE_OBJECT_MAX_LEN = 10 * 1024 * 1024 * 1024
+const UNSERIALIZABLE_OBJECT_MAX_LEN = int64(10 * 1024 * 1024 * 1024)
 
 func UnMarshal(data []byte) (interface{}, error) {
 	reader := bytes.NewReader(data)
@@ -255,7 +255,7 @@ func readLength(reader *bytes.Reader) (int, error) {
 	} else {
 		if val, err = strconv.Atoi(raw); err != nil {
 			return 0, fmt.Errorf("UnMarshal: Unable to convert %s to int: %v", raw, err)
-		} else if val > UNSERIALIZABLE_OBJECT_MAX_LEN {
+		} else if int64(val) > UNSERIALIZABLE_OBJECT_MAX_LEN {
 			return 0, fmt.Errorf("UnMarshal: Unserializable object length looks too big(%d). If you are sure you wanna unserialise it, please increase UNSERIALIZABLE_OBJECT_MAX_LEN const", val)
 			val = 0
 		}
