@@ -114,14 +114,16 @@ func unMarshalString(reader *bytes.Reader, isFinal bool) (interface{}, error) {
 	)
 
 	strLen, err = readLength(reader)
-
+	if err != nil {
+		return nil, err
+	}
 	err = expect(reader, '"')
 	if err != nil {
 		return nil, err
 	}
 
 	if strLen > 0 {
-		buf := make([]byte, strLen, strLen)
+		buf := make([]byte, strLen)
 		if readLen, err = reader.Read(buf); err != nil {
 			return nil, fmt.Errorf("UnMarshal: Error while reading string value: %v", err)
 		} else {
@@ -203,8 +205,10 @@ func unMarshalArray(reader *bytes.Reader) (interface{}, error) {
 
 	if indexLen == arrLen {
 		var slice []interface{}
-		for _, row := range val {
-			slice = append(slice, row)
+		// fix map sort
+		for i := 0; i < len(val); i++ {
+			k, _ := utils.NumericalToString(i)
+			slice = append(slice, val[k])
 		}
 		return slice, nil
 	}
@@ -257,7 +261,6 @@ func readLength(reader *bytes.Reader) (int, error) {
 			return 0, fmt.Errorf("UnMarshal: Unable to convert %s to int: %v", raw, err)
 		} else if int64(val) > UNSERIALIZABLE_OBJECT_MAX_LEN {
 			return 0, fmt.Errorf("UnMarshal: Unserializable object length looks too big(%d). If you are sure you wanna unserialise it, please increase UNSERIALIZABLE_OBJECT_MAX_LEN const", val)
-			val = 0
 		}
 	}
 	return val, nil
