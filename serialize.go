@@ -1,6 +1,6 @@
 package gophp
 
-import "github.com/techoner/gophp/serialize"
+import "github.com/leeqvip/gophp/serialize"
 
 // Serialize  Generates a storable representation of a value
 func Serialize(value interface{}) ([]byte, error) {

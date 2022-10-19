@@ -1,7 +1,7 @@
 gophp
 ====
 
-[![Build Status](https://travis-ci.com/techoner/gophp.svg?branch=master)](https://travis-ci.com/techoner/gophp)
+[![Build Status](https://travis-ci.com/leeqvip/gophp.svg?branch=master)](https://travis-ci.com/leeqvip/gophp)
 
 
 Golang implementation for PHP's functions
@@ -10,7 +10,7 @@ Golang implementation for PHP's functions
 ## Install / Update
 
 ```
-go get -u github.com/techoner/gophp
+go get -u github.com/leeqvip/gophp
 ```
 
 ## Example
@@ -21,7 +21,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/techoner/gophp"
+	"github.com/leeqvip/gophp"
 )
 
 func main() {
