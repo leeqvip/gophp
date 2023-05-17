@@ -1,6 +1,7 @@
 package serialize
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -17,4 +18,28 @@ func TestUnMarshal(t *testing.T) {
 		t.Errorf("UnMarshal incorrectly, have got %t\n", out)
 	}
 
+}
+
+func TestUnMarshalArray(t *testing.T) {
+	// [1 2 3 4 5 6 7 8 9]
+	input := `a:9:{i:0;i:1;i:1;i:2;i:2;i:3;i:3;i:4;i:4;i:5;i:5;i:6;i:6;i:7;i:7;i:8;i:8;i:9;}`
+	expected := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+	out, err := UnMarshal([]byte(input))
+	if err != nil {
+		panic(err)
+	}
+
+	res, ok := out.([]interface{})
+	if !ok {
+		t.Errorf("UnMarshal incorrectly, have got %t\n", out)
+	}
+	var got []int
+	for _, val := range res {
+		got = append(got, val.(int))
+	}
+
+	if !reflect.DeepEqual(expected, got) {
+		t.Errorf("UnMarshal array unsort, expected: %v, got: %v", expected, got)
+	}
 }
