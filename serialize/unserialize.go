@@ -3,6 +3,7 @@ package serialize
 import (
 	"bytes"
 	"fmt"
+	"sort"
 	"strconv"
 
 	"github.com/leeqvip/gophp/utils"
@@ -203,8 +204,13 @@ func unMarshalArray(reader *bytes.Reader) (interface{}, error) {
 
 	if indexLen == arrLen {
 		var slice []interface{}
-		for _, row := range val {
-			slice = append(slice, row)
+		var keys []string
+		for k := range val {
+			keys = append(keys, k)
+		}
+		sort.Strings(keys)
+		for _, k := range keys {
+			slice = append(slice, val[k])
 		}
 		return slice, nil
 	}
