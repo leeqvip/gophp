@@ -132,6 +132,8 @@ func unMarshalString(reader *bytes.Reader, isFinal bool) (interface{}, error) {
 				val = string(buf)
 			}
 		}
+	} else {
+		val = ""
 	}
 
 	err = expect(reader, '"')
