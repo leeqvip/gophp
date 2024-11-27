@@ -10,7 +10,6 @@ import (
 )
 
 func Marshal(value interface{}) ([]byte, error) {
-
 	if value == nil {
 		return MarshalNil(), nil
 	}
@@ -20,7 +19,7 @@ func Marshal(value interface{}) ([]byte, error) {
 	case reflect.Bool:
 		return MarshalBool(value.(bool)), nil
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64,
-		reflect.Uint, reflect.Uint16, reflect.Uint32, reflect.Uint64,
+		reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64,
 		reflect.Float32, reflect.Float64:
 		return MarshalNumber(value), nil
 	case reflect.String:
@@ -65,7 +64,6 @@ func MarshalNumber(value interface{}) []byte {
 
 	if isFloat {
 		return []byte("d:" + val + ";")
-
 	} else {
 		return []byte("i:" + val + ";")
 	}
@@ -76,7 +74,6 @@ func MarshalString(value string) []byte {
 }
 
 func MarshalMap(value interface{}) ([]byte, error) {
-
 	s := reflect.ValueOf(value)
 
 	mapKeys := s.MapKeys()
